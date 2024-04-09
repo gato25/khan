@@ -24,13 +24,13 @@ headers = {
   'secure': 'yes'
 }
 
-def get_otp(password):
+def get_otp(username, password):
   encoded_password = base64.b64encode(bytes(password, 'utf-8')).decode('utf-8')
   print(password,encoded_password)
 
   payload = json.dumps({
     "grant_type": "password",
-    "username": "8809b",
+    "username": username,
     "password": encoded_password,
     "channelId": "I",
     "languageId": "003"
@@ -42,7 +42,7 @@ def get_otp(password):
 
   secondary_data = json.dumps({
       "grant_type": "password",
-      "username": "8809b",
+      "username": username,
       "password": encoded_password,
       "languageId": "mn",
       "channelId": "I",
@@ -54,12 +54,12 @@ def get_otp(password):
   secondary_response = httpx.post(url, data=secondary_data, headers=headers)
   return secondary_response.json()
 
-def login(otp, req_id):
+def login(otp, req_id, username):
   encoded_password = base64.b64encode(bytes(otp, 'utf-8')).decode('utf-8')
 
   final_data = json.dumps({
       "grant_type": "password",
-      "username": "8809b",
+      "username": username,
       "password": encoded_password,
       "channelId": "I",
       "isPrelogin": "N",
