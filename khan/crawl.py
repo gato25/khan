@@ -1,6 +1,7 @@
 import httpx
 import json
 import base64
+from .models.token import Token
 
 url = "https://e.khanbank.com/v1/cfrm/auth/token"
 
@@ -73,3 +74,31 @@ def login(otp, req_id, username):
   final_response = httpx.post(url, data = final_data, headers=headers)
   print(final_response)
   return final_response.json()
+
+def refresh_token(db):
+  try:
+    token = db.query(Token).order_by(Token.created_at.desc()).first()
+    
+    payload = '%7B%7D='
+    headers = {
+      'Accept': 'application/json, text/plain, */*',
+      'Accept-Language': 'mn-MN',
+      # 'Authorization': f'Basic {token.access_token}',
+      'Connection': 'keep-alive',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Origin': 'https://e.khanbank.com',
+      'Referer': 'https://e.khanbank.com/account/statement/5429348172/MNT/OPR',
+      'Sec-Fetch-Dest': 'empty',
+      'Sec-Fetch-Mode': 'cors',
+      'Sec-Fetch-Site': 'same-origin'
+    }
+    
+    url = f"https://e.khanbank.com/v1/cfrm/auth/token?grant_type=refresh_token&refresh_token={token.refresh_token}"
+
+    response = httpx.post(url, headers=headers)
+    print(response)
+    return response.json()
+  except Exception as e:
+    print(e)
+    import traceback
+    traceback.print_exc()
