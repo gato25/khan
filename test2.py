@@ -6,7 +6,7 @@ payload = {}
 headers = {
   'Accept': 'application/json, text/plain, */*',
   'Accept-Language': 'mn-MN',
-  'Authorization': 'Bearer fSxZDmd1F6THk6Bjll0SMO2L8A0S',
+  'Authorization': 'Bearer GWqhGjFK1eFu0W8scBtaYUtETKPb',
   'Connection': 'keep-alive',
   'Cookie': '_ga=GA1.1.491542904.1709608750; __ssds=2; __ssuzjsr2=a9be0cd8e; __uzmaj2=97f36607-bc79-4c5c-8a4d-df21677a36e2; __uzmbj2=1709608750; __uzma=2fd083d4-64e1-8a5f-089c-45515714c4f3; __uzmb=1712305789; __uzme=6444; SL_ClassKey=0.1.1; _ga_XY11GTD04T=GS1.1.1712799055.6.0.1712799055.60.0.0; __uzmcj2=572836129519; __uzmdj2=1712799059; __uzmd=1712799721; __uzmc=5993228911758; SL_ClassKey=0.1.1; __uzma=ff157351-6a7c-bc64-1a8a-d4bd27d5a592; __uzmb=1712799658; __uzmc=6214729287378; __uzmd=1712799852; __uzme=8043',
   'Referer': 'https://e.khanbank.com/account/statement/5429348172/MNT/OPR',
@@ -23,4 +23,4 @@ headers = {
 
 response = httpx.get(url, headers=headers)
 
-print(response.text)
+print(response.json())
