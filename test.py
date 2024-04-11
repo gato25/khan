@@ -3,7 +3,7 @@ import subprocess
 curl_command = [
     "curl",
     "--location",
-    "https://e.khanbank.com/v1/cfrm/auth/token?grant_type=refresh_token&refresh_token=y7Gh4qKUnCsx9uZ3CAaNgAPMwRKSQVJG",
+    "https://e.khanbank.com/v1/cfrm/auth/token?grant_type=refresh_token&refresh_token=AkXGrf5woZAGwFCEVA9BXY0m61KLrW6s",
     "--header", "Accept: application/json, text/plain, */*",
     "--header", "Accept-Language: mn-MN",
     "--header", "Authorization: Basic Vm00eHFtV1BaQks3Vm5UYjNRRXJZbjlJZkxoWmF6enI6dElJQkFsU09pVXIwclV5cA==",
