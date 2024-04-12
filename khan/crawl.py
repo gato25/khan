@@ -4,7 +4,7 @@ import base64
 from .models.token import Token, Transaction
 import subprocess
 import datetime
-from dateutil import parser
+# from dateutil import parser
 import traceback
 
 url = "https://e.khanbank.com/v1/cfrm/auth/token"
