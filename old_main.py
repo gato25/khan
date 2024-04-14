@@ -25,7 +25,7 @@ def login(request: LoginRequest):
 
     if not browser:
         p = sync_playwright().start()
-        browser = p.firefox.launch(headless=True) 
+        browser = p.firefox.launch(headless=False) 
 
     if not context:
         # Check if context exists
@@ -33,9 +33,7 @@ def login(request: LoginRequest):
             # Load context from the file
             with open('context.json', 'r') as f:
                 context_state = json.load(f)
-                print(context_state)
             context = browser.new_context(storage_state=context_state)
-            print("test")
         else:
             context = browser.new_context()
 
@@ -57,28 +55,26 @@ def login(request: LoginRequest):
     page.on('response', handle_response)
 
     # Check if already logged in
-    # page.goto('https://e.khanbank.com/')
-    # if page.url == 'https://e.khanbank.com/':
-    #     return {'message': 'Already logged in'}
-    # else:
-    login_khan(page, _username, _password)
-    if os.path.exists('context.json'):
-        print('test')
-        sleep(3)
-        page.get_by_role("complementary").get_by_role("link", name=" Данс").click()
-        page.click("//a[contains(@class, 'ctrl-btn') and .//span[text()='Хуулга']]")
-        print('test2')
-        sleep(5)
-        
-        page.locator("div.statement-list-header-control a").first.click()
+    page.goto('https://e.khanbank.com/')
+    if page.url == 'https://e.khanbank.com/':
+        return {'message': 'Already logged in'}
+    else:
+        login_khan(page, _username, _password)
+        if os.path.exists('context.json'):
+    
+            sleep(3)
+            page.get_by_role("complementary").get_by_role("link", name=" Данс").click()
+            page.click("//a[contains(@class, 'ctrl-btn') and .//span[text()='Хуулга']]")
+            sleep(5)
+            page.locator("div.statement-list-header-control a").first.click()
 
-        context_state = context.storage_state()
-        with open('context.json', 'w') as f:
-            json.dump(context_state, f)
+            context_state = context.storage_state()
+            with open('context.json', 'w') as f:
+                json.dump(context_state, f)
 
-        page.close()
-        browser.close()
-        return {'message': 'Logged in successfully'}
+            page.close()
+            browser.close()
+            return {'message': 'Logged in successfully'}
 
 @app.post('/sms')
 def sms(request: OTPRequest):
@@ -89,7 +85,6 @@ def sms(request: OTPRequest):
 
     page.fill('#otp', code)
     page.check("input[type='checkbox']")
-    sleep(3)
     page.click("//span[text()='Үргэлжлүүлэх']")
 
     # Save context to a file after filling the OTP
@@ -119,12 +114,12 @@ def enter_otp(page, code):
     page.check("input[type='checkbox']")
     page.click("//span[text()='Үргэлжлүүлэх']")
 
-# @app.on_event('shutdown')
-# def close_browser():
-#     global browser
-#     if browser:
-#         browser.close()
-#         browser = None
+@app.on_event('shutdown')
+def close_browser():
+    global browser
+    if browser:
+        browser.close()
+        browser = None
 
 if __name__ == '__main__':
     import uvicorn
