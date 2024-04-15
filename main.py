@@ -33,7 +33,7 @@ def login(request: LoginRequest):
             # Load context from the file
             with open('context.json', 'r') as f:
                 context_state = json.load(f)
-                print(context_state)
+                # print(context_state)
             context = browser.new_context(storage_state=context_state)
             print("test")
         else:
@@ -64,13 +64,25 @@ def login(request: LoginRequest):
     login_khan(page, _username, _password)
     if os.path.exists('context.json'):
         print('test')
-        sleep(3)
+        # sleep(3)
+        page.wait_for_load_state("networkidle")
         page.get_by_role("complementary").get_by_role("link", name=" Данс").click()
+        page.wait_for_load_state("networkidle")
         page.click("//a[contains(@class, 'ctrl-btn') and .//span[text()='Хуулга']]")
+        page.wait_for_load_state("networkidle")
         print('test2')
         sleep(5)
-        
-        page.locator("div.statement-list-header-control a").first.click()
+        retry_count = 3
+        for _ in range(retry_count):
+            try:
+                page.locator("div.statement-list-header-control a").first.click()
+                break
+            except Exception as e:
+                print(f"Click failed: {e}")
+                sleep(1)  # Wait for a second before retrying
+        else:
+            print("Failed to click after multiple retries.")
+        # page.locator(".statement-list-header-control a").first.click()
 
         context_state = context.storage_state()
         with open('context.json', 'w') as f:
