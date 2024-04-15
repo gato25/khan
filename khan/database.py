@@ -8,7 +8,7 @@ DATABASE_URL = "postgresql://postgres:nKhFt0qKFmjLwJQ@109.105.220.153:5432"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+
 
 # Dependency
 def get_db():
