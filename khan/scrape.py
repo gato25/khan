@@ -121,7 +121,7 @@ def main():
 
     # Start Playwright
     p = sync_playwright().start()
-    browser = p.firefox.launch(headless=True)
+    browser = p.chromium.launch(headless=True)
     context = browser.new_context(storage_state=context_state)
     page = context.new_page()
 

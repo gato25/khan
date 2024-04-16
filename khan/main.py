@@ -25,7 +25,7 @@ def login(request: LoginRequest):
 
     if not browser:
         p = sync_playwright().start()
-        browser = p.firefox.launch(headless=False) 
+        browser = p.chromium.launch(headless=True) 
 
     if not context:
         # Check if context exists
@@ -47,8 +47,8 @@ def login(request: LoginRequest):
         return {'message': 'Already logged in'}
     else:
         login_khan(page, _username, _password)
-        page.close()
-        browser.close()
+        # page.close()
+        # browser.close()
     return {'message': 'Logged in successfully'}
 
 @app.post('/sms')
