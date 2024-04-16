@@ -26,3 +26,6 @@ listen_addresses = '*'
 sudo nano /etc/postgresql/14/main/pg_hba.conf
 host    all             all             0.0.0.0/0               md5
 sudo service postgresql restart
+
+ganaa@152.42.208.139
+82xUB522v!1N

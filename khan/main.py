@@ -25,7 +25,7 @@ def login(request: LoginRequest):
 
     if not browser:
         p = sync_playwright().start()
-        browser = p.chromium.launch(headless=True) 
+        browser = p.firefox.launch(headless=False) 
 
     if not context:
         # Check if context exists
@@ -80,7 +80,8 @@ def login_khan(page, _username, _password):
     
     if not os.path.exists('context.json'):
         sleep(3)
-        page.click("//span[@class='ant-radio']/following-sibling::span")
+        # page.click("//span[@class='ant-radio']/following-sibling::span")
+        page.click("//label[@class='ant-radio-wrapper'][1]")
         sleep(3)
         page.click("//span[text()='Үргэлжлүүлэх']")
     return True

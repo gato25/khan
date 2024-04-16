@@ -22,7 +22,7 @@ connection = psycopg2.connect(
 KHAN_ACCOUNT = os.getenv('KHAN_ACCOUNT')
 
 def handle_response(response):
-    if f'https://e.khanbank.com/v1/omni/user/custom/operativeaccounts/{KHAN_ACCOUNT}/transactions' in response.url:
+    if f'https://e.khanbank.com/v1/omni/user/custom/operativeaccounts' in response.url:
         print('API Response: --------------------------------------------')
         print(response.url)
 
@@ -121,7 +121,7 @@ def main():
 
     # Start Playwright
     p = sync_playwright().start()
-    browser = p.chromium.launch(headless=True)
+    browser = p.chromium.launch(headless=False)
     context = browser.new_context(storage_state=context_state)
     page = context.new_page()
 
